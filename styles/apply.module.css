@@ -1,0 +1,8 @@
+.container {
+  margin-top: 1rem;
+}
+.container .title {
+  color: #507fcc;
+  font-size: 20px;
+  font-weight: 400;
+}
