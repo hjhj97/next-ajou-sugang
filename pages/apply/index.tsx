@@ -8,6 +8,12 @@ function apply() {
     //const data = await res.json();
     //console.log(data);
     const res = await applyLecture();
+    if (res) {
+      // 신청 성공
+    } else {
+      // 실패
+      alert("정원이 초과되었습니다.");
+    }
   };
 
   return (
