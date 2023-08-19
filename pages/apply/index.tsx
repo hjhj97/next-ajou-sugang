@@ -10,6 +10,7 @@ export interface Lecture {
 
 function Apply() {
   const lectureRef = useRef<HTMLInputElement>();
+  const lectureCodeRef = useRef<HTMLInputElement>();
   const [sugangList, setSugangList] = useState<Lecture[]>([{ code: "AB123", name: "컴퓨터 프로그래밍 입문" }]);
 
   const onClickApply = async (code: string) => {
@@ -27,11 +28,17 @@ function Apply() {
   };
 
   const addPreSugang = () => {
-    if (lectureRef.current == undefined) return;
+    if (lectureRef.current == undefined || lectureCodeRef.current == undefined) return;
     const lectureName = lectureRef.current?.value;
+    const lectrueCode = lectureCodeRef.current?.value;
+    if (lectureName == "" || lectrueCode == "") {
+      alert("강의명과 코드를 입력해주세요");
+      return;
+    }
 
-    setSugangList((prev) => [...prev, { name: lectureName, code: "NONE" }]);
+    setSugangList((prev) => [...prev, { name: lectureName, code: lectrueCode }]);
     lectureRef.current.value = "";
+    lectureCodeRef.current.value = "";
   };
 
   return (
@@ -67,7 +74,9 @@ function Apply() {
           <div>
             <label htmlFor="lecture-name">강의명</label>
             <input type="text" id="lecture-name" ref={lectureRef} />
-            <button onClick={addPreSugang}>예비수강신청 강의 추가</button>
+            <label htmlFor="lecture-code">강의코드</label>
+            <input type="text" id="lecture-code" ref={lectureCodeRef} />
+            <button onClick={addPreSugang}>예비신청 강의추가</button>
           </div>
           <SugangTable sugangList={sugangList} onClickApply={onClickApply} />
         </div>
