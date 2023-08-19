@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "@/styles/apply.module.css";
 import { applyLecture } from "@/mock/server";
 import SugangTable from "@/components/SugangTable";
@@ -9,6 +9,7 @@ export interface Lecture {
 }
 
 function Apply() {
+  const lectureRef = useRef<HTMLInputElement>();
   const [sugangList, setSugangList] = useState<Lecture[]>([{ code: "AB123", name: "컴퓨터 프로그래밍 입문" }]);
 
   const onClickApply = async (code: string) => {
@@ -19,6 +20,18 @@ function Apply() {
       // 실패
       alert("정원이 초과되었습니다.");
     }
+  };
+
+  const onClickDelete = async (code: string) => {
+    //
+  };
+
+  const addPreSugang = () => {
+    if (lectureRef.current == undefined) return;
+    const lectureName = lectureRef.current?.value;
+
+    setSugangList((prev) => [...prev, { name: lectureName, code: "NONE" }]);
+    lectureRef.current.value = "";
   };
 
   return (
@@ -45,10 +58,16 @@ function Apply() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h4>예비수강신청목록</h4>
+
             <div style={{ display: "flex" }}>
               <label>총 신청학점 : </label>
               <input type="text" style={{ width: "50px" }} />
             </div>
+          </div>
+          <div>
+            <label htmlFor="lecture-name">강의명</label>
+            <input type="text" id="lecture-name" ref={lectureRef} />
+            <button onClick={addPreSugang}>예비수강신청 강의 추가</button>
           </div>
           <SugangTable sugangList={sugangList} onClickApply={onClickApply} />
         </div>
@@ -57,11 +76,7 @@ function Apply() {
           <h4>수강신청목록</h4>
           <div
             style={{ display: "flex", gap: "1rem", padding: "1rem 0", border: "1px solid black", marginTop: "0.5rem" }}
-          >
-            <p>1</p>
-            <button>신청</button>
-            <p>컴퓨터 프로그래밍 입문</p>
-          </div>
+          ></div>
         </div>
       </div>
     </div>
