@@ -11,12 +11,15 @@ export interface Lecture {
 function Apply() {
   const lectureRef = useRef<HTMLInputElement>();
   const lectureCodeRef = useRef<HTMLInputElement>();
-  const [sugangList, setSugangList] = useState<Lecture[]>([{ code: "AB123", name: "컴퓨터 프로그래밍 입문" }]);
+  const [preSugangList, setPreSugangList] = useState<Lecture[]>([{ code: "AB123", name: "컴퓨터 프로그래밍 입문" }]);
+  const [sugangList, setSugangList] = useState<Lecture[]>([]);
 
-  const onClickApply = async (code: string) => {
+  const onClickApply = async (lecture: Lecture) => {
     const res = await applyLecture();
     if (res) {
       // 신청 성공
+      setSugangList((prev) => [...prev, lecture]);
+      setPreSugangList((prev) => prev.filter((item) => item.code !== lecture.code));
     } else {
       // 실패
       alert("정원이 초과되었습니다.");
@@ -36,7 +39,7 @@ function Apply() {
       return;
     }
 
-    setSugangList((prev) => [...prev, { name: lectureName, code: lectrueCode }]);
+    setPreSugangList((prev) => [...prev, { name: lectureName, code: lectrueCode }]);
     lectureRef.current.value = "";
     lectureCodeRef.current.value = "";
   };
@@ -78,14 +81,12 @@ function Apply() {
             <input type="text" id="lecture-code" ref={lectureCodeRef} />
             <button onClick={addPreSugang}>예비신청 강의추가</button>
           </div>
-          <SugangTable sugangList={sugangList} onClickApply={onClickApply} />
+          <SugangTable sugangList={preSugangList} onClickApply={onClickApply} />
         </div>
 
         <div style={{ marginTop: "2rem" }}>
           <h4>수강신청목록</h4>
-          <div
-            style={{ display: "flex", gap: "1rem", padding: "1rem 0", border: "1px solid black", marginTop: "0.5rem" }}
-          ></div>
+          <SugangTable sugangList={sugangList} onClickApply={() => {}} />
         </div>
       </div>
     </div>
