@@ -3,10 +3,10 @@ import React from "react";
 
 function SugangTable({
   sugangList,
-  onClickApply,
+  onClickButton,
 }: {
   sugangList: Lecture[];
-  onClickApply: (lecture: Lecture) => void;
+  onClickButton: (lecture: Lecture) => void;
 }) {
   return (
     <div>
@@ -15,7 +15,7 @@ function SugangTable({
           style={{ display: "flex", gap: "1rem", padding: "1rem 0", border: "1px solid black", marginTop: "0.5rem" }}
           key={sugang.code}
         >
-          <button onClick={() => onClickApply(sugang)}>신청</button>
+          <button onClick={() => onClickButton(sugang)}>신청</button>
           <p>{sugang.name}</p>
         </div>
       ))}

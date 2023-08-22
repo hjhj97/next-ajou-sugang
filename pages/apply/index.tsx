@@ -26,7 +26,7 @@ function Apply() {
     }
   };
 
-  const onClickDelete = async (code: string) => {
+  const onClickDelete = async () => {
     //
   };
 
@@ -81,12 +81,12 @@ function Apply() {
             <input type="text" id="lecture-code" ref={lectureCodeRef} />
             <button onClick={addPreSugang}>예비신청 강의추가</button>
           </div>
-          <SugangTable sugangList={preSugangList} onClickApply={onClickApply} />
+          <SugangTable sugangList={preSugangList} onClickButton={onClickApply} />
         </div>
 
         <div style={{ marginTop: "2rem" }}>
           <h4>수강신청목록</h4>
-          <SugangTable sugangList={sugangList} onClickApply={() => {}} />
+          <SugangTable sugangList={sugangList} onClickButton={onClickDelete} />
         </div>
       </div>
     </div>
