@@ -60,7 +60,7 @@ function Apply() {
             <p>수강번호</p>
             <div>
               <input type="text" />
-              <button>신청</button>
+              <button onClick={onClickApply}>신청</button>
             </div>
           </div>
         </div>
